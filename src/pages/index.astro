@@ -1,11 +1,191 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+// src/pages/index.astro
+import ParallaxComponent from "../components/App.jsx";
+import "../styles/global.css";
+import "../styles/App.css";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const ahora = new Date();
+const mes = ahora.getMonth();
+const dia = ahora.getDate();
+
+// Cambia esto para probar
+const esNavidad = true; // false = construcción, true = parallax
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>{esNavidad ? "¡Galería del Gato!" : "Under Construction"}</title>
+  </head>
+  <body>
+    {
+      esNavidad ? (
+        <ParallaxComponent client:load />
+      ) : (
+        <div class="construction">
+          <!-- Video de fondo -->
+          <video 
+            class="background-video" 
+            autoplay 
+            loop 
+            muted 
+            playsinline
+            poster="/videos/poster.jpeg"
+          >
+            <source src="/videos/construccion.mp4" type="video/mp4" />
+            <!-- Fallback para navegadores que no soporten video -->
+            <img src="/videos/construccion.gif" alt="Under Construction" />
+          </video>
+          
+          <!-- Overlay con el mensaje -->
+          <div class="overlay">
+            <h1>UNDER CONSTRUCTION <br> 刘柯妤</h1>
+            <p>Come back on</p>
+            <p class="date">December 25th</p>
+          </div>
+        </div>
+      )
+    }
+  </body>
+</html>
+
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: fixed;
+  }
+
+  .construction {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh; /* Dynamic viewport height para móviles */
+    overflow: hidden;
+    background: #000;
+  }
+
+  .background-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    z-index: 1;
+  }
+
+  /* Optimización para iPhone en vertical */
+  @media (orientation: portrait) {
+    .background-video {
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+    }
+  }
+
+  /* Optimización para iPhone en horizontal */
+  @media (orientation: landscape) {
+    .background-video {
+      width: 100vw;
+      height: auto;
+    }
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(1.8rempx);
+    padding: 2rem;
+  }
+
+  .overlay h1 {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: clamp(2rem, 8vw, 3.5rem);
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    color: #ffffff;
+    text-shadow: 
+      0 0 10px rgba(255, 255, 255, 0.5),
+      0 0 20px rgba(255, 255, 255, 0.3),
+      0 4px 10px rgba(0, 0, 0, 0.8);
+    margin-bottom: 1.5rem;
+    text-align: center;
+    animation: glow 2s ease-in-out infinite;
+  }
+
+  .overlay p {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: clamp(1.2rem, 5vw, 1.8rem);
+    color: #ffffff;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+    margin: 0.5rem 0;
+    text-align: center;
+  }
+
+  .overlay .date {
+    font-size: clamp(1.5rem, 6vw, 2.5rem);
+    font-weight: bold;
+    color: #ffd700;
+    text-shadow: 
+      0 0 15px rgba(255, 215, 0, 0.8),
+      0 2px 10px rgba(0, 0, 0, 0.8);
+    margin-top: 1rem;
+  }
+
+  @keyframes glow {
+    0%, 100% {
+      text-shadow: 
+        0 0 10px rgba(255, 255, 255, 0.5),
+        0 0 20px rgba(255, 255, 255, 0.3),
+        0 4px 10px rgba(0, 0, 0, 0.8);
+    }
+    50% {
+      text-shadow: 
+        0 0 20px rgba(255, 255, 255, 0.8),
+        0 0 30px rgba(255, 255, 255, 0.5),
+        0 4px 15px rgba(0, 0, 0, 0.8);
+    }
+  }
+
+  /* Optimización específica para iPhone 17 Pro */
+  @supports (height: 100dvh) {
+    .construction {
+      height: 100dvh;
+    }
+  }
+
+  /* Prevenir scroll en iOS */
+  body {
+    position: fixed;
+    overflow: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+</style>
