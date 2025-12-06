@@ -1,3 +1,7 @@
+---
+// 1. Obtenemos la ruta base (/FinalR/) definida en tu configuración
+const base = import.meta.env.BASE_URL;
+---
 
 <!doctype html>
 <html lang="es">
@@ -9,8 +13,7 @@
         <title>A special gift</title>
     </head>
     <body>
-        <!-- Botón volver (aparece después de unos segundos) -->
-        <a href="/src/pages/video.astro" class="back-button" id="backButton">
+        <a href={`${base}video`} class="back-button" id="backButton">
             <svg
                 width="24"
                 height="24"
@@ -24,7 +27,6 @@
             back
         </a>
 
-        <!-- Contenedor del video -->
         <video
             id="mainVideo"
             class="main-video"
@@ -33,15 +35,15 @@
             playsinline
             controlslist="nodownload"
         >
-            <source src="/videos/regalo.mp4" type="video/mp4" />
-            <source src="/videos/regalo.mov" type="video/quicktime" />
+            <source src={`${base}videos/regalo.mp4`} type="video/mp4" />
+            <source src={`${base}videos/regalo.mov`} type="video/quicktime" />
             Tu navegador no soporta video HTML5.
         </video>
-        
     </body>
 </html>
 
 <style>
+    /* Tus estilos se quedan exactamente igual */
     * {
         margin: 0;
         padding: 0;

@@ -4,6 +4,7 @@ import '../styles/global.css';
 import moon from '../assets/moon.png';
 import land from '../assets/land.png';
 import cat from '../assets/cat.gif';
+const base = import.meta.env.BASE_URL;
 
 export default function ParallaxComponent() {
   const ref = useRef();
@@ -62,7 +63,7 @@ export default function ParallaxComponent() {
         >
           <h2>Thank you for saving me Liu♥</h2>
 
-          <a href="./src/pages/video.astro" style={{
+          <a href={`${base}video`} style={{
             marginTop: '20px',
             padding: '10px 60px',
             backgroundColor: 'rgba(19, 19, 19, 0.46)',
