@@ -7,7 +7,7 @@ const base = import.meta.env.BASE_URL;
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
+        <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta
@@ -26,9 +26,9 @@ const base = import.meta.env.BASE_URL;
 
         <section class="content-section">
             <video class="background-media" autoplay loop muted playsinline>
-                <source src={`${base}videos/background.mp4`} type="video/mp4" />
+                <source src={`${base}/videos/background.mp4`} type="video/mp4" />
                 <img
-                    src={`${base}videos/background.gif`}
+                    src={`${base}/videos/background.gif`}
                     class="background-media"
                     alt="background"
                 />
@@ -100,10 +100,10 @@ const base = import.meta.env.BASE_URL;
         <section class="button-section">
             <button
                 class="next-button"
-                onclick={`window.location.href='${base}last/'`}
+                onclick={`window.location.href='${base}/last/'`}
             >
                 <img
-                    src={`${base}images/cat-button.gif`}
+                    src={`${base}/images/cat-button.gif`}
                     alt="Next"
                     class="cat-gif"
                 />
