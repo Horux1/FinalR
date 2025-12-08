@@ -18,14 +18,9 @@ const base = import.meta.env.BASE_URL;
         <title>Video Page</title>
     </head>
     <body>
-        <section class="hero-section">
-            <div class="hero-content">
-                <h1 class="hero-title">Ey You!!! <br /> ↓↓↓</h1>
-            </div>
-        </section>
-
-        <section class="content-section">
-            <video class="background-media" autoplay loop muted playsinline>
+        <!-- VIDEO DE FONDO GLOBAL - FUERA de las secciones -->
+        <div class="fixed-video-background">
+            <video autoplay loop muted playsinline>
                 <source
                     src={`${base}/videos/background.mp4`}
                     type="video/mp4"
@@ -36,7 +31,14 @@ const base = import.meta.env.BASE_URL;
                     alt="background"
                 />
             </video>
+        </div>
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">Ey You!!! <br /> ↓↓↓</h1>
+            </div>
+        </section>
 
+        <section class="content-section">
             <div class="blur-box">
                 <h2>Lemme tell you a story</h2>
 
@@ -125,17 +127,50 @@ const base = import.meta.env.BASE_URL;
         box-sizing: border-box;
     }
 
+    html,
+    body {
+        width: 100%;
+        min-height: 100%;
+    }
+
     body {
         font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
             "Segoe UI", sans-serif;
         background: #000;
         color: #fff;
         overflow-x: hidden;
+        position: relative;
     }
 
+    /* VIDEO DE FONDO FIJO - CUBRE TODA LA PÁGINA */
+    .fixed-video-background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        height: 100dvh;
+        z-index: 0;
+        overflow: hidden;
+    }
+
+    .fixed-video-background video {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        transform: translate(-50%, -50%);
+        object-fit: cover;
+    }
+
+    /* HERO SECTION */
     .hero-section {
         position: relative;
         height: 300vh;
+        z-index: 1;
     }
 
     .hero-content {
@@ -147,7 +182,6 @@ const base = import.meta.env.BASE_URL;
         justify-content: center;
         text-align: center;
         padding: 2rem;
-        z-index: 10;
     }
 
     .hero-title {
@@ -160,56 +194,15 @@ const base = import.meta.env.BASE_URL;
         will-change: transform, opacity;
     }
 
+    /* CONTENT SECTION */
     .content-section {
         position: relative;
         min-height: 100vh;
         display: flex;
         align-items: center;
         justify-content: center;
-        overflow: hidden;
-    }
-
-    .background-media {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        height: 100dvh; /* 👈 Altura dinámica para móviles */
-        object-fit: cover;
         z-index: 1;
-        transform: translateZ(0); /* 👈 Fuerza aceleración GPU */
-        -webkit-transform: translateZ(0);
-        backface-visibility: hidden; /* 👈 Mejora el rendering */
-        -webkit-backface-visibility: hidden;
-    }
-
-    /* Añade esto después de .background-media */
-    @supports (-webkit-touch-callout: none) {
-        /* Específico para iOS Safari */
-        .background-media {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            min-height: -webkit-fill-available;
-        }
-    }
-
-    /* Fix adicional para móviles */
-    @media (max-width: 768px) {
-        .background-media {
-            position: absolute; /* 👈 Cambia a absolute en móvil */
-            height: 100%; /* 👈 Altura del contenedor padre */
-            will-change: transform;
-        }
-
-        .content-section {
-            position: relative;
-            min-height: 100vh;
-            min-height: 100dvh;
-        }
+        padding: 2rem 0;
     }
 
     .blur-box {
@@ -248,6 +241,7 @@ const base = import.meta.env.BASE_URL;
         transform: translateY(0);
     }
 
+    /* BUTTON SECTION */
     .button-section {
         position: relative;
         z-index: 2;
@@ -262,13 +256,28 @@ const base = import.meta.env.BASE_URL;
         border: none;
         background: transparent;
         cursor: pointer;
-        overflow: hidden;
-        border-radius: 20px;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        overflow: visible;
         transition: transform 0.3s ease;
         display: flex;
+        flex-direction: column;
         align-items: center;
         gap: 1rem;
+    }
+
+    .next-button:hover {
+        transform: translateY(-5px);
+    }
+
+    .next-button:active {
+        transform: translateY(-2px);
+    }
+
+    .cat-gif {
+        width: 200px;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
     }
 
     .button-text {
@@ -282,21 +291,6 @@ const base = import.meta.env.BASE_URL;
             0 0 40px rgba(255, 255, 255, 0.5),
             0 4px 10px rgba(0, 0, 0, 0.8);
         animation: glow-pulse 2s ease-in-out infinite;
-    }
-
-    .next-button:hover {
-        transform: scale(1.05);
-    }
-
-    .next-button:active {
-        transform: scale(0.98);
-    }
-
-    .cat-gif {
-        width: 200px;
-        height: 200px;
-        object-fit: cover;
-        border-radius: 20px;
     }
 
     @keyframes glow-pulse {
@@ -317,8 +311,11 @@ const base = import.meta.env.BASE_URL;
 
     .spacer {
         height: 50vh;
+        position: relative;
+        z-index: 1;
     }
 
+    /* RESPONSIVE */
     @media (max-width: 768px) {
         .blur-box {
             padding: 2rem 1.5rem;
@@ -336,6 +333,13 @@ const base = import.meta.env.BASE_URL;
 
         .button-text {
             font-size: 1.5rem;
+        }
+    }
+
+    /* FIX PARA iOS */
+    @supports (-webkit-touch-callout: none) {
+        .fixed-video-background {
+            height: -webkit-fill-available;
         }
     }
 </style>
@@ -386,8 +390,8 @@ const base = import.meta.env.BASE_URL;
 
         fadeElements.forEach((element) => observer.observe(element));
 
-        const video = document.querySelector(".background-media");
-        if (video && video instanceof HTMLVideoElement) {
+        const video = document.querySelector(".fixed-video-background video");
+        if (video) {
             video.play().catch(() => {});
         }
     });
