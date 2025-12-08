@@ -26,7 +26,10 @@ const base = import.meta.env.BASE_URL;
 
         <section class="content-section">
             <video class="background-media" autoplay loop muted playsinline>
-                <source src={`${base}/videos/background.mp4`} type="video/mp4" />
+                <source
+                    src={`${base}/videos/background.mp4`}
+                    type="video/mp4"
+                />
                 <img
                     src={`${base}/videos/background.gif`}
                     class="background-media"
@@ -172,8 +175,41 @@ const base = import.meta.env.BASE_URL;
         left: 0;
         width: 100vw;
         height: 100vh;
+        height: 100dvh; /* 👈 Altura dinámica para móviles */
         object-fit: cover;
         z-index: 1;
+        transform: translateZ(0); /* 👈 Fuerza aceleración GPU */
+        -webkit-transform: translateZ(0);
+        backface-visibility: hidden; /* 👈 Mejora el rendering */
+        -webkit-backface-visibility: hidden;
+    }
+
+    /* Añade esto después de .background-media */
+    @supports (-webkit-touch-callout: none) {
+        /* Específico para iOS Safari */
+        .background-media {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            min-height: -webkit-fill-available;
+        }
+    }
+
+    /* Fix adicional para móviles */
+    @media (max-width: 768px) {
+        .background-media {
+            position: absolute; /* 👈 Cambia a absolute en móvil */
+            height: 100%; /* 👈 Altura del contenedor padre */
+            will-change: transform;
+        }
+
+        .content-section {
+            position: relative;
+            min-height: 100vh;
+            min-height: 100dvh;
+        }
     }
 
     .blur-box {
