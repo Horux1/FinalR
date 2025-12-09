@@ -61,7 +61,7 @@ export default function ParallaxComponent() {
             alignItems: 'center'
           }}
         >
-          <h2>Thank you for saving me Liu♥</h2>
+          <h2>Thank you for saving me Liu!</h2>
 
           <a href={`${base}/video`} style={{
             marginTop: '20px',
