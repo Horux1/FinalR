@@ -20,11 +20,29 @@ const esNavidad = true; // false = construcción, true = parallax
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="mobile-web-app-capable" content="yes">
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="mobile-web-app-capable" content="yes" />
     <title>{esNavidad ? "¡Help the Cat!" : "Under Construction"}</title>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HGM3PSSNFL"
+    ></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-HGM3PSSNFL");
+    </script>
   </head>
   <body>
     {
@@ -35,21 +53,26 @@ const esNavidad = true; // false = construcción, true = parallax
         <ParallaxComponent client:load />
       ) : (
         <div class="construction">
-          <video 
-            class="background-video" 
-            autoplay 
-            loop 
-            muted 
+          <video
+            class="background-video"
+            autoplay
+            loop
+            muted
             playsinline
             poster={`${base}videos/poster.jpeg`}
           >
             /* 5. Corregido: Video source con base */
             <source src={`${base}/videos/construccion.mp4`} type="video/mp4" />
-            <img src={`${base}/videos/construccion.gif`} alt="Under Construction" />
+            <img
+              src={`${base}/videos/construccion.gif`}
+              alt="Under Construction"
+            />
           </video>
-          
+
           <div class="overlay">
-            <h1>UNDER CONSTRUCTION <br> 刘柯妤</h1>
+            <h1>
+              UNDER CONSTRUCTION <br /> 刘柯妤
+            </h1>
             <p>Come back on</p>
             <p class="date">December 25th</p>
           </div>
@@ -67,7 +90,8 @@ const esNavidad = true; // false = construcción, true = parallax
     box-sizing: border-box;
   }
 
-  html, body {
+  html,
+  body {
     width: 100%;
     height: 100%;
     overflow: hidden;
@@ -80,7 +104,7 @@ const esNavidad = true; // false = construcción, true = parallax
     left: 0;
     width: 100vw;
     height: 100vh;
-    height: 100dvh; 
+    height: 100dvh;
     overflow: hidden;
     background: #000;
   }
@@ -130,12 +154,12 @@ const esNavidad = true; // false = construcción, true = parallax
   }
 
   .overlay h1 {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     font-size: clamp(2rem, 8vw, 3.5rem);
     font-weight: 900;
     letter-spacing: 0.1em;
     color: #ffffff;
-    text-shadow: 
+    text-shadow:
       0 0 10px rgba(255, 255, 255, 0.5),
       0 0 20px rgba(255, 255, 255, 0.3),
       0 4px 10px rgba(0, 0, 0, 0.8);
@@ -145,7 +169,7 @@ const esNavidad = true; // false = construcción, true = parallax
   }
 
   .overlay p {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     font-size: clamp(1.2rem, 5vw, 1.8rem);
     color: #ffffff;
     text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
@@ -157,21 +181,22 @@ const esNavidad = true; // false = construcción, true = parallax
     font-size: clamp(1.5rem, 6vw, 2.5rem);
     font-weight: bold;
     color: #ffd700;
-    text-shadow: 
+    text-shadow:
       0 0 15px rgba(255, 215, 0, 0.8),
       0 2px 10px rgba(0, 0, 0, 0.8);
     margin-top: 1rem;
   }
 
   @keyframes glow {
-    0%, 100% {
-      text-shadow: 
+    0%,
+    100% {
+      text-shadow:
         0 0 10px rgba(255, 255, 255, 0.5),
         0 0 20px rgba(255, 255, 255, 0.3),
         0 4px 10px rgba(0, 0, 0, 0.8);
     }
     50% {
-      text-shadow: 
+      text-shadow:
         0 0 20px rgba(255, 255, 255, 0.8),
         0 0 30px rgba(255, 255, 255, 0.5),
         0 4px 15px rgba(0, 0, 0, 0.8);
